@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.TSetmealCheckgroupMapper">
+
+    <resultMap type="TSetmealCheckgroup" id="TSetmealCheckgroupResult">
+        <result property="setmealId"    column="setmeal_id"    />
+        <result property="checkgroupId"    column="checkgroup_id"    />
+    </resultMap>
+
+    <sql id="selectTSetmealCheckgroupVo">
+        select setmeal_id, checkgroup_id from t_setmeal_checkgroup
+    </sql>
+
+    <select id="selectTSetmealCheckgroupList" parameterType="TSetmealCheckgroup" resultMap="TSetmealCheckgroupResult">
+        <include refid="selectTSetmealCheckgroupVo"/>
+        <where>
+        </where>
+    </select>
+
+    <select id="selectTSetmealCheckgroupBySetmealId" parameterType="Long" resultMap="TSetmealCheckgroupResult">
+        <include refid="selectTSetmealCheckgroupVo"/>
+        where setmeal_id = #{setmealId}
+    </select>
+
+    <insert id="insertTSetmealCheckgroup" parameterType="TSetmealCheckgroup">
+        insert into t_setmeal_checkgroup
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="setmealId != null">setmeal_id,</if>
+            <if test="checkgroupId != null">checkgroup_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="setmealId != null">#{setmealId},</if>
+            <if test="checkgroupId != null">#{checkgroupId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTSetmealCheckgroup" parameterType="TSetmealCheckgroup">
+        update t_setmeal_checkgroup
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="checkgroupId != null">checkgroup_id = #{checkgroupId},</if>
+        </trim>
+        where setmeal_id = #{setmealId}
+    </update>
+
+    <delete id="deleteTSetmealCheckgroupBySetmealId" parameterType="Long">
+        delete from t_setmeal_checkgroup where setmeal_id = #{setmealId}
+    </delete>
+
+    <delete id="deleteTSetmealCheckgroupBySetmealIds" parameterType="String">
+        delete from t_setmeal_checkgroup where setmeal_id in
+        <foreach item="setmealId" collection="array" open="(" separator="," close=")">
+            #{setmealId}
+        </foreach>
+    </delete>
+</mapper>

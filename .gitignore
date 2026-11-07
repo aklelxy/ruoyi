@@ -1,0 +1,40 @@
+# ---- Java / Maven ----
+target/
+*.class
+*.jar
+*.war
+*.log
+logs/
+.mvn/wrapper/maven-wrapper.jar
+
+# ---- IDE ----
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+
+# ---- Node / Vue ----
+node_modules/
+dist/
+.npmrc
+*.local
+.pnpm-store/
+
+# ---- 数据库与密钥 ----
+*.sql.bak
+application-local.yml
+application-druid-local.yml
+
+# ---- 打包文件（不要提交到仓库） ----
+*.rar
+*.zip
+*.7z
+
+# ---- 系统文件 ----
+.DS_Store
+Thumbs.db
+desktop.ini

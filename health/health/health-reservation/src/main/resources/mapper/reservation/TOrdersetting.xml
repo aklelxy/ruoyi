@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.TOrdersettingMapper">
+
+    <resultMap type="TOrdersetting" id="TOrdersettingResult">
+        <result property="id"    column="id"    />
+        <result property="orderDate"    column="order_date"    />
+        <result property="number"    column="number"    />
+        <result property="reservations"    column="reservations"    />
+    </resultMap>
+
+    <sql id="selectTOrdersettingVo">
+        select id, order_date, number, reservations from t_ordersetting
+    </sql>
+
+    <select id="selectTOrdersettingList" parameterType="TOrdersetting" resultMap="TOrdersettingResult">
+        <include refid="selectTOrdersettingVo"/>
+        <where>
+            <if test="orderDate != null "> and order_date = #{orderDate}</if>
+            <if test="number != null "> and number = #{number}</if>
+            <if test="reservations != null "> and reservations = #{reservations}</if>
+        </where>
+    </select>
+
+    <select id="selectTOrdersettingById" parameterType="Long" resultMap="TOrdersettingResult">
+        <include refid="selectTOrdersettingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTOrdersetting" parameterType="TOrdersetting" useGeneratedKeys="true" keyProperty="id">
+        insert into t_ordersetting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderDate != null">order_date,</if>
+            <if test="number != null">number,</if>
+            <if test="reservations != null">reservations,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderDate != null">#{orderDate},</if>
+            <if test="number != null">#{number},</if>
+            <if test="reservations != null">#{reservations},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTOrdersetting" parameterType="TOrdersetting">
+        update t_ordersetting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderDate != null">order_date = #{orderDate},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="reservations != null">reservations = #{reservations},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTOrdersettingById" parameterType="Long">
+        delete from t_ordersetting where id = #{id}
+    </delete>
+
+    <delete id="deleteTOrdersettingByIds" parameterType="String">
+        delete from t_ordersetting where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
